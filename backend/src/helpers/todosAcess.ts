@@ -81,7 +81,7 @@ export class TodosAccess {
             }
           });
         logger.info('getUserIds result: ' + items);
-        return items as UserIds[]
+        return userIds as UserIds[]
     } 
 
     async createTodo(newItem: TodoItem): Promise<TodoItem> {
