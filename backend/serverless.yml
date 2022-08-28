@@ -100,6 +100,50 @@ functions:
           - dynamodb:Query
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_CREATED_AT_INDEX}
 
+  # TODO: Configure this function - 
+  # Provide iamRoleStatements property for performing Actions on DynamoDB
+  GetUserIds:
+    handler: src/lambda/http/getUserIds.handler
+    events:
+      - http:
+          method: get
+          path: userIds
+          cors: true
+          authorizer: RS256Auth
+          reqValidatorName: RequestBodyValidator
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_CREATED_AT_INDEX}      
+
+   # TODO: Configure this function - 
+  # Provide iamRoleStatements property for performing Actions on DynamoDB
+  search:
+    handler: src/lambda/http/search.handler
+    events:
+      - http:
+          method: get
+          path: search
+          cors: true
+          authorizer: RS256Auth
+          reqValidatorName: RequestBodyValidator
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Scan
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}/index/${self:provider.environment.TODOS_CREATED_AT_INDEX}     
+
   ## TODO: Configure this function - 
   # Provide iamRoleStatements property. Decide the Actions and AWS Resource. 
   # To refer to an AWS resource defined in the "Resources" section, you can use "Resource: !GetAtt <resource-name>.Arn"
