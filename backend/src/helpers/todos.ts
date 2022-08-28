@@ -3,6 +3,7 @@ import { TodoItem } from '../models/TodoItem'
 import { TodoUpdate } from '../models/TodoUpdate'
 import { CreateTodoRequest } from '../requests/CreateTodoRequest'
 import { UpdateTodoRequest } from '../requests/UpdateTodoRequest'
+import { UserIds } from '../models/UserIds'
 import { createLogger } from '../utils/logger'
 import * as uuid from 'uuid'
 
@@ -27,6 +28,16 @@ export async function createTodo(newTodo: CreateTodoRequest, userId: string): Pr
   export async function getTodos(userId: string): Promise<TodoItem[]> {
     logger.info('call getTodos Access: ' );
     return accessDB.getTodos(userId)
+  }
+
+  export async function getUserIds(): Promise<UserIds[]> {
+    logger.info('call getUserIds Access: ' );
+    return accessDB.getUserIds()
+  }
+
+  export async function serach(userId: string): Promise<UserIds[]> {
+    logger.info('call getUserIds Access: ' );
+    return accessDB.serach(userId)
   }
     
   export async function updateTodo(todoId: string, updatedTodo: UpdateTodoRequest, userId: string): Promise<TodoUpdate> {

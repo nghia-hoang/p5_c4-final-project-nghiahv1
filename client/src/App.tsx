@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { Link, Route, Router, Switch } from 'react-router-dom'
-import { Grid, Menu, Segment } from 'semantic-ui-react'
+import { Grid, Menu, Search, Segment } from 'semantic-ui-react'
 
 import Auth from './auth/Auth'
 import { EditTodo } from './components/EditTodo'
 import { LogIn } from './components/LogIn'
 import { NotFound } from './components/NotFound'
 import { Todos } from './components/Todos'
+import { Searchs } from './components/Searchs'
+
 
 export interface AppProps {}
 
@@ -59,7 +61,9 @@ export default class App extends Component<AppProps, AppState> {
         <Menu.Item name="home">
           <Link to="/">Home</Link>
         </Menu.Item>
-
+        <Menu.Item name="search">
+        <Link to="/search">search</Link>
+        </Menu.Item>
         <Menu.Menu position="right">{this.logInLogOutButton()}</Menu.Menu>
       </Menu>
     )
@@ -93,6 +97,14 @@ export default class App extends Component<AppProps, AppState> {
           exact
           render={props => {
             return <Todos {...props} auth={this.props.auth} />
+          }}
+        />
+
+        <Route
+          path="/search"
+          exact
+          render={props => {
+            return <Searchs {...props} auth={this.props.auth} />
           }}
         />
 

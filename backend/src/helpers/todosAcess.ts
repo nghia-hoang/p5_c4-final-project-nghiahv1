@@ -3,7 +3,9 @@ import * as AWSXRay from 'aws-xray-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { createLogger } from '../utils/logger'
 import { TodoItem } from '../models/TodoItem'
-import { TodoUpdate } from '../models/TodoUpdate';
+import { TodoUpdate } from '../models/TodoUpdate'
+import { UserIds } from '../models/UserIds'
+
 
 const XAWS = AWSXRay.captureAWS(AWS)
 const logger = createLogger('TodosAccess')
@@ -35,6 +37,53 @@ export class TodosAccess {
         logger.info('getTodos result: ' + items);
         return items as TodoItem[]
     }  
+
+    async serach(userId: string): Promise<TodoItem[]> {
+        logger.info('call TodosAccess.getTodos');
+        const params = {
+            TableName: this.todosTable,
+            KeyConditionExpression: "#userId = :userId",
+            ExpressionAttributeValues: {
+              ":userId": userId
+            },
+            ExpressionAttributeNames: {
+              "#userId": "userId"
+            },
+            ScanIndexForward: true
+          };
+        logger.info('call TodosAccess.getTodos2');
+        const result = await this.dbAccess.query(params).promise();  
+        logger.info('call TodosAccess.getTodos3'); 
+        const items = result.Items
+        logger.info('getTodos result: ' + items);
+        return items as TodoItem[]
+    } 
+
+    async getUserIds(): Promise<UserIds[]> {
+        logger.info('call TodosAccess.getUserIds');
+        const params = {
+            TableName: this.todosTable
+          };
+        logger.info('call TodosAccess.getUserIds');
+        const result = await this.dbAccess.scan(params).promise();  
+        logger.info('call TodosAccess.getUserIds'); 
+        const items = result.Items
+        let userIds = [];
+        var itemsKey = []
+        items.forEach(function print(element){
+            if(!itemsKey.includes(element.userId)){
+                const jsonObject = {
+                    "text": element.userId,
+                    "value": element.userId
+                }
+                userIds.push(jsonObject)
+                itemsKey.push(element.userId)
+            }
+          });
+        logger.info('getUserIds result: ' + items);
+        return items as UserIds[]
+    } 
+
     async createTodo(newItem: TodoItem): Promise<TodoItem> {
         logger.info('call TodosAccess.createTodo');
         await this.dbAccess.put({

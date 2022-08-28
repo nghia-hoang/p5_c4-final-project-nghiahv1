@@ -123,7 +123,7 @@ export class Todos extends React.PureComponent<TodosProps, TodosState> {
             action={{
               color: 'teal',
               labelPosition: 'left',
-              icon: 'add',
+              icon: 'search',
               content: 'New task',
               onClick: this.onTodoCreate
             }}
