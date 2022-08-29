@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import * as middy from 'middy'
 import { cors, httpErrorHandler } from 'middy/middlewares'
 import { CreateTodoRequest } from '../../requests/CreateTodoRequest'
-import { createTodo as createTodo } from '../../helpers/todos'
+import { createTodo as createTodo } from '../../businessLogic/todos'
 import { getUserId } from '../utils';
 
 export const handler = middy(
