@@ -3,7 +3,7 @@ import * as middy from 'middy'
 import { cors, httpErrorHandler } from 'middy/middlewares'
 import { v4 as uuidv4 } from 'uuid';
 import { AttachmentUtils } from '../../helpers/attachmentUtils';
-import { updateAttachmentUrl as updateAttachmentUrl } from '../../helpers/todos'
+import { updateAttachmentUrl as updateAttachmentUrl } from '../../businessLogic/todos'
 import { getUserId } from '../utils';
 
 const attachmentUtils = new AttachmentUtils()
