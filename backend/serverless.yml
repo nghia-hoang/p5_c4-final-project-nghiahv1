@@ -124,12 +124,12 @@ functions:
 
    # TODO: Configure this function - 
   # Provide iamRoleStatements property for performing Actions on DynamoDB
-  search:
-    handler: src/lambda/http/search.handler
+  getSearch:
+    handler: src/lambda/http/getSearch.handler
     events:
       - http:
           method: get
-          path: search
+          path: search/{userId}
           cors: true
           authorizer: RS256Auth
           reqValidatorName: RequestBodyValidator

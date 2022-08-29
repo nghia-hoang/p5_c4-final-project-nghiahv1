@@ -38,7 +38,7 @@ export class TodosAccess {
         return items as TodoItem[]
     }  
 
-    async serach(userId: string): Promise<TodoItem[]> {
+    async search(userId: string): Promise<TodoItem[]> {
         logger.info('call TodosAccess.getTodos');
         const params = {
             TableName: this.todosTable,

@@ -35,9 +35,9 @@ export async function createTodo(newTodo: CreateTodoRequest, userId: string): Pr
     return accessDB.getUserIds()
   }
 
-  export async function serach(userId: string): Promise<UserIds[]> {
-    logger.info('call getUserIds Access: ' );
-    return accessDB.serach(userId)
+  export async function search(userId: string): Promise<UserIds[]> {
+    logger.info('call getUserIds Access: ' + userId);
+    return accessDB.search(userId)
   }
     
   export async function updateTodo(todoId: string, updatedTodo: UpdateTodoRequest, userId: string): Promise<TodoUpdate> {
