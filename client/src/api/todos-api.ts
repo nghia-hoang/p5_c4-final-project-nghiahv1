@@ -34,7 +34,7 @@ export async function getUserIds(idToken: string): Promise<UserId[]> {
 export async function search(idToken: string, userId: string): Promise<Todo[]> {
   console.log("userId:" + userId);
   
-  const response = await Axios.get(`${apiEndpoint}/search?userId=` + userId, {
+  const response = await Axios.get(`${apiEndpoint}/search?userId=${userId}` , {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${idToken}`
